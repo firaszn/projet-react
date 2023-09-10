@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import TaskList from './Components/TaskList';
+import TaskForm from './Components/TaskForm';
 
 function App() {
   const [tasks, setTasks] = useState([
@@ -18,51 +19,26 @@ function App() {
     },
   ]);
 
-  const [newTask, setNewTask] = useState({
-    title: '',
-    description: '',
-  });
-
   const deleteTask = (taskId) => {
     setTasks(tasks.filter((task) => task.id !== taskId));
   };
 
-  const addTask = () => {
-    if (newTask.title.trim() !== '') {
-      const taskId = tasks.length + 1;
-      setTasks([
-        ...tasks,
-        {
-          id: taskId,
-          title: newTask.title,
-          description: newTask.description,
-          completed: false,
-        },
-      ]);
-      setNewTask({ title: '', description: '' });
-    }
+  const addTask = (newTask) => {
+    const taskId = tasks.length + 1;
+    setTasks([
+      ...tasks,
+      {
+        id: taskId,
+        ...newTask,
+        completed: false,
+      },
+    ]);
   };
 
   return (
     <div className="App">
       <h1>Task List</h1>
-      <div className="task-form">
-        <input
-          type="text"
-          placeholder="Task Title"
-          value={newTask.title}
-          onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
-        />
-        <input
-          type="text"
-          placeholder="Task Description"
-          value={newTask.description}
-          onChange={(e) =>
-            setNewTask({ ...newTask, description: e.target.value })
-          }
-        />
-        <button onClick={addTask}>Add Task</button>
-      </div>
+      <TaskForm onAddTask={addTask} />
       <TaskList tasks={tasks} onDelete={deleteTask} />
     </div>
   );
