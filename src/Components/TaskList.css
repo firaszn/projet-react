@@ -1,0 +1,23 @@
+
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px; 
+  }
+  
+  .task {
+    border: 1px solid #ddd;
+    padding: 16px;
+    background-color: #f9f9f9;
+    transition: background-color 0.3s ease-in-out; 
+  
+    &:hover {
+      background-color: #eaeaea;
+    }
+  }
+  
+  .task.completed {
+    background-color: #c0e57c; 
+    text-decoration: line-through; 
+  }
+  

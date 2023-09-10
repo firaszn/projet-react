@@ -1,5 +1,3 @@
-/* Task.css */
-
 .task {
     border: 1px solid #ddd;
     padding: 16px;
@@ -12,7 +10,7 @@
   }
   
   .completed {
-    background-color: #c0e57c; /* Green background for completed tasks */
-    text-decoration: line-through; /* Strikethrough for completed tasks */
+    background-color: #c0e57c; 
+    text-decoration: line-through; 
   }
   
