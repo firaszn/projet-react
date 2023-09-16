@@ -1,36 +1,36 @@
 import React, { useState } from 'react';
+import { Form, FormControl, Button } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 
-const TaskForm = ({ onAddTask }) => {
- 
-  const [newTask, setNewTask] = useState({
-    title: '',
-    description: '',
-  });
+const TaskForm = () => {
+  const [newTask, setNewTask] = useState({ title: '', description: '' });
+  const dispatch = useDispatch();
 
-  const addTask = () => {
-    if (newTask.title.trim() !== '') {
-      onAddTask(newTask);
-      setNewTask({ title: '', description: '' });
+  const handleAddTask = () => {
+    if (newTask.description) {
+      dispatch({ type: 'ADD_TASK', payload: { id: Math.random(), ...newTask, completed: false } });
+    } else {
+      alert('Cannot add an empty task');
     }
   };
 
   return (
-    <div className="task-form">
-      <input
-        type="text"
-        placeholder="Task Title"
-        value={newTask.title}
-        onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
-      />
-      <input
-        type="text"
-        placeholder="Task Description"
-        value={newTask.description}
-        onChange={(e) =>
-          setNewTask({ ...newTask, description: e.target.value })
-        }
-      />
-      <button onClick={addTask}>Add Task</button>
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <Form>
+        <FormControl
+          type="text"
+          placeholder="Task Title"
+          value={newTask.title}
+          onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
+        />
+        <FormControl
+          type="text"
+          placeholder="Task Description"
+          value={newTask.description}
+          onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
+        />
+        <Button onClick={handleAddTask}>Add Task</Button>
+      </Form>
     </div>
   );
 };

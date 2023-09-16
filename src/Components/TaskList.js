@@ -1,13 +1,29 @@
-import React from 'react';
-import Task from './Task'; 
-import './TaskList.css'; 
+import React, { useState } from 'react';
+import './TaskList.css';
+import Task from './Task';
+import Filter from './Filter'; 
+import { useSelector } from 'react-redux';
+const TaskList = () => {
+  const tasks = useSelector((state) => state.tasks);
+  const [status, setStatus] = useState('ALL'); 
 
-const TaskList = ({ tasks, onDelete }) => {
+  const handleFilterChange = (newStatus) => {
+    setStatus(newStatus);
+  };
+
   return (
-    <div className="task-list">
-      {tasks.map((task) => (
-        <Task key={task.id} task={task} onDelete={onDelete} />
-      ))}
+    <div>
+      <Filter filterStatus={status} onFilterChange={handleFilterChange} />
+
+      {status === 'Active'
+        ? tasks
+            .filter((el) => el.completed === true)
+            .map((task) => <Task key={task.id} task={task} />)
+        : status === 'Completed'
+        ? tasks
+            .filter((el) => el.completed === false)
+            .map((task) => <Task key={task.id} task={task} />)
+        : tasks.map((task) => <Task key={task.id} task={task} />)}
     </div>
   );
 };
